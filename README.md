@@ -1,5 +1,5 @@
 # Census
-Python scripts that utilizes the census.gov API to calculate travel demand information.
+Python scripts that utilize the census.gov API to calculate travel demand information.
 
 #### modalSplit_vehOcc.py:
 * Modal split
