@@ -7,7 +7,6 @@ key = '2018ff1e9bad51c5f32b4198a8809febe64573d6'
 def modalSplit_vehOcc(state, county, census_tracts):
 
     # data set names
-
     name = 'NAME'
     total = 'B08006_001E'
     total_car = 'B08006_002E'
@@ -28,23 +27,8 @@ def modalSplit_vehOcc(state, county, census_tracts):
     home = 'B08006_017E'
     tract_col = 'tract'
 
-    ### location info
-    ##
-    ### New York State: 36
-    ##state = '36'
-    ##state = state
-    ##
-    ### New York County: 061
-    ### Kings County: 047
-    ### Queens County: 081
-    ### Bronx County: 005
-    ### Richmond County: 085
-    ##county = '047'
-    ##
-    ##census_tracts = '000900,001100,001300,001500,001800' # 1234.56 = 123456
-
     # build url
-    url = 'https://api.census.gov/data/2018/acs/acs5'\
+    url = 'https://api.census.gov/data/2019/acs/acs5'\
           '?get=%s,'\
           '%s,'\
           '%s,'\
@@ -100,7 +84,7 @@ def modalSplit_vehOcc(state, county, census_tracts):
     data = json[1:]
     results = []
     for row in data:
-        tract = round(float(row[headers[tract_col]]) / 100, 2)
+        tract = row[headers[tract_col]]
         modal_splits = {}
         total_commute = int(row[headers[total]]) - int(row[headers[home]])
         total_auto = int(row[headers[total_car]])

@@ -8,7 +8,7 @@ import time
 import requests
 import json
 import pandas as pd
-from modalSplit_vehOcc import modalSplit_vehOcc
+from vehicleOwnership import vehicle_ownership
 
 # census.gov API key
 key = '2018ff1e9bad51c5f32b4198a8809febe64573d6'
@@ -33,7 +33,7 @@ county_names = {'061': 'New York',
                 '005': 'Bronx',
                 '085': 'Richmond'}
 
-outputFile = 'data/NYC_Mode_Split_Veh_Occ_2019.csv'
+outputFile = 'data/NYC_Vehicle_Ownership_2019.csv'
 
 def get_county_tracts(state, county):
 
@@ -80,23 +80,23 @@ def analyze_tracts(county, tracts):
     data = []
     county_tracts = ','.join(tracts)
     # try:
-    results = modalSplit_vehOcc(state, county, county_tracts)
+    results = vehicle_ownership(state, county, county_tracts)
     for row in results:
         tract = row['tract']
-        total_commute = row['total_commute']
-        modal_splits = row['modal_splits']
-        total_auto = row['total_auto']
-        veh_occ = row['veh_occ']
+        percent_vehicles_owner = row['percent_vehicles_owner']
+        percent_vehicles_renter = row['percent_vehicles_renter']
+        percent_vehicles_household = row['percent_vehicles_household']
+        vehicles_per_owner = row['vehicles_per_owner']
+        vehicles_per_renter = row['vehicles_per_renter']
+        vehicles_per_household = row['vehicles_per_household']
         data.append([county_name,
                      tract,
-                     total_commute,
-                     modal_splits['Auto'],
-                     modal_splits['Bus'],
-                     modal_splits['Subway/Rail'],
-                     modal_splits['Taxi'],
-                     modal_splits['Walk/Other'],
-                     total_auto,
-                     veh_occ])
+                     percent_vehicles_owner,
+                     percent_vehicles_renter,
+                     percent_vehicles_household,
+                     vehicles_per_owner,
+                     vehicles_per_renter,
+                     vehicles_per_household])
     # except Exception as e:
     #     print('Error for county %s' % county, e)
 
@@ -119,14 +119,12 @@ all_data = [
     [
         'county',
         'tract',
-        'total_commute',
-        'auto',
-        'bus',
-        'subway_rail',
-        'taxi',
-        'walk_other',
-        'total_drive',
-        'veh_occ'
+        'percent_vehicles_owner',
+        'percent_vehicles_renter',
+        'percent_vehicles_household',
+        'vehicles_per_owner',
+        'vehicles_per_renter',
+        'vehicles_per_household'
      ]
 ]
 
