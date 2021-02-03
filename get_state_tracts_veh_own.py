@@ -83,20 +83,26 @@ def analyze_tracts(county, tracts):
     results = vehicle_ownership(state, county, county_tracts)
     for row in results:
         tract = row['tract']
+        num_households = row['num_households']
+        num_owners = row['num_owners']
+        num_renters = row['num_renters']
+        percent_vehicles_household = row['percent_vehicles_household']
         percent_vehicles_owner = row['percent_vehicles_owner']
         percent_vehicles_renter = row['percent_vehicles_renter']
-        percent_vehicles_household = row['percent_vehicles_household']
+        vehicles_per_household = row['vehicles_per_household']
         vehicles_per_owner = row['vehicles_per_owner']
         vehicles_per_renter = row['vehicles_per_renter']
-        vehicles_per_household = row['vehicles_per_household']
         data.append([county_name,
                      tract,
+                     num_households,
+                     num_owners,
+                     num_renters,
+                     percent_vehicles_household,
                      percent_vehicles_owner,
                      percent_vehicles_renter,
-                     percent_vehicles_household,
+                     vehicles_per_household,
                      vehicles_per_owner,
-                     vehicles_per_renter,
-                     vehicles_per_household])
+                     vehicles_per_renter])
     # except Exception as e:
     #     print('Error for county %s' % county, e)
 
@@ -114,24 +120,27 @@ def write_to_csv(data, outputFile):
         writer.writerows(data)
 
 
+if __name__ == '__main__':
+    all_data = [
+        [
+            'county',
+            'tract',
+            'num_households',
+            'num_owners',
+            'num_renters',
+            'percent_vehicles_household',
+            'percent_vehicles_owner',
+            'percent_vehicles_renter',
+            'vehicles_per_household',
+            'vehicles_per_owner',
+            'vehicles_per_renter'
+         ]
+    ]
 
-all_data = [
-    [
-        'county',
-        'tract',
-        'percent_vehicles_owner',
-        'percent_vehicles_renter',
-        'percent_vehicles_household',
-        'vehicles_per_owner',
-        'vehicles_per_renter',
-        'vehicles_per_household'
-     ]
-]
+    for county in counties:
+        tracts = get_county_tracts(state, county)
+        county_data = analyze_tracts(county, tracts)
+        all_data.extend(county_data)
 
-for county in counties:
-    tracts = get_county_tracts(state, county)
-    county_data = analyze_tracts(county, tracts)
-    all_data.extend(county_data)
-
-write_to_csv(all_data, outputFile)
-print('Output written to %s' % outputFile)
+    write_to_csv(all_data, outputFile)
+    print('Output written to %s' % outputFile)

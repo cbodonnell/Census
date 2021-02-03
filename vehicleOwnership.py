@@ -78,6 +78,10 @@ def vehicle_ownership(state, county, census_tracts):
     results = []
 
     for row in data:
+        num_households = int(row[headers[total]])
+        num_owners = int(row[headers[owner_total]])
+        num_renters = int(row[headers[renter_total]])
+
         if int(row[headers[owner_total]]) > 0:
             percent_vehicles_owner = (int(row[headers[owner_one]]) +
                                       int(row[headers[owner_two]]) +
@@ -134,12 +138,15 @@ def vehicle_ownership(state, county, census_tracts):
 
         ownership_data = {
             'tract': row[headers[tract_col]],
+            'num_households': num_households,
+            'num_owners': num_owners,
+            'num_renters': num_renters,
+            'percent_vehicles_household': percent_vehicles_household,
             'percent_vehicles_owner': percent_vehicles_owner,
             'percent_vehicles_renter': percent_vehicles_renter,
-            'percent_vehicles_household': percent_vehicles_household,
+            'vehicles_per_household': vehicles_per_household,
             'vehicles_per_owner': vehicles_per_owner,
             'vehicles_per_renter': vehicles_per_renter,
-            'vehicles_per_household': vehicles_per_household,
         }
 
         results.append(ownership_data)
