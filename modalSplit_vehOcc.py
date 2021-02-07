@@ -17,9 +17,9 @@ def modalSplit_vehOcc(state, county, census_tracts):
     car_four = 'B08006_007E'
     total_transit = 'B08006_008E'
     bus = 'B08006_009E'
-    streetcar = 'B08006_010E'
-    subway = 'B08006_011E'
-    railroad = 'B08006_012E'
+    subway = 'B08006_010E'
+    railroad = 'B08006_011E'
+    streetcar = 'B08006_012E'
     ferry = 'B08006_013E'
     bicycle = 'B08006_014E'
     walk = 'B08006_015E'
@@ -61,10 +61,10 @@ def modalSplit_vehOcc(state, county, census_tracts):
               car_four,
               total_transit,
               bus,
-              streetcar,
               subway,
-              ferry,
               railroad,
+              streetcar,
+              ferry,
               bicycle,
               walk,
               taxi,
